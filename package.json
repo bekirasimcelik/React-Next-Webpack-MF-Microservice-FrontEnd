@@ -1,0 +1,48 @@
+{
+  "name": "microfrontend-task-react-nextjs",
+  "version": "1.0.0",
+  "description": "Microfrontend using nextJS-host, nextjs-remote and react remote",
+  "scripts": {
+    "start": "pnpm -r --no-bail --workspace-concurrency 100 start"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "husky": "^8.0.3",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
+    "sass": "^1.57.1"
+  },
+  "devDependencies": {
+    "@types/node": "17.0.33",
+    "@types/react": "18.0.18",
+    "concurrently": "7.4.0",
+    "tslib": "2.4.1",
+    "typescript": "4.9.4",
+    "webpack": "5.75.0"
+  },
+  "workspaces": [
+    "shared"
+  ],
+  "engines": {
+    "node": ">=14",
+    "npm": "please-use-pnpm",
+    "pnpm": ">=7"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "18.0.18"
+    },
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "18",
+        "react-dom": "18"
+      },
+      "ignoreMissing": [
+        "prop-types",
+        "ts-node",
+        "typescript"
+      ]
+    }
+  }
+}
