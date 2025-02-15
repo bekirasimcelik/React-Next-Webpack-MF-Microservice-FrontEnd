@@ -1,6 +1,0 @@
-packages:
-  - host
-  - shared
-  - remotes/basket
-  - remotes/products
-  - remotes/product2

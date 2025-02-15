@@ -1,48 +1,23 @@
 {
-  "name": "microfrontend-task-react-nextjs",
+  "name": "nextjs-host-react-remote",
   "version": "1.0.0",
-  "description": "Microfrontend using nextJS-host, nextjs-remote and react remote",
+  "description": "Module Federation with NextJS and Client-Side React Remotes",
+  "private": true,
+  "workspaces": [
+    "host-app",
+    "remote-app",
+    "remote-next"
+  ],
+  "main": "index.js",
   "scripts": {
-    "start": "pnpm -r --no-bail --workspace-concurrency 100 start"
+    "start": "pnpm --parallel --filter nextjs-react_* run dev",
+    "e2e:ci": "pnpm start & sleep 2 && wait-on http-get://localhost:3000/ && wait-on http-get://localhost:3001/ && npx cypress run --config-file ../cypress-e2e/config/cypress.config.ts --config '{\"supportFile\": \"../cypress-e2e/support/e2e.ts\"}' --spec \"./e2e/runAll.cy.ts\" --browser=chrome"
   },
   "keywords": [],
-  "license": "MIT",
+  "author": "rahulteja-dev",
+  "license": "ISC",
   "dependencies": {
-    "husky": "^8.0.3",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
-    "sass": "^1.57.1"
-  },
-  "devDependencies": {
-    "@types/node": "17.0.33",
-    "@types/react": "18.0.18",
-    "concurrently": "7.4.0",
-    "tslib": "2.4.1",
-    "typescript": "4.9.4",
-    "webpack": "5.75.0"
-  },
-  "workspaces": [
-    "shared"
-  ],
-  "engines": {
-    "node": ">=14",
-    "npm": "please-use-pnpm",
-    "pnpm": ">=7"
-  },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "18.0.18"
-    },
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "react": "18",
-        "react-dom": "18"
-      },
-      "ignoreMissing": [
-        "prop-types",
-        "ts-node",
-        "typescript"
-      ]
-    }
+    "concurrently": "^8.2.2",
+    "wait-on": "7.2.0"
   }
 }
