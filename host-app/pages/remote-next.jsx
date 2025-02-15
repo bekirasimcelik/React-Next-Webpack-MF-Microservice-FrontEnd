@@ -5,7 +5,7 @@ export default function RemoteNext() {
   const [RemoteButton, setRemoteButton] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setRemoteButton(lazy(() => import("remoteNext/Button")));
+      setRemoteButton(lazy(() => import("remoteNext/Products")));
     }
   }, []);
   return (

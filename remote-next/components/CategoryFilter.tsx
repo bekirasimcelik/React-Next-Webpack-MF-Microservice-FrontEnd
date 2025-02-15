@@ -8,15 +8,13 @@ type CategoryFilterProps = {
 };
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, selectedCategory, onSelect }) => {
-  return (
-    <Menu mode="horizontal" selectedKeys={[selectedCategory]}>
-      {categories.map((category) => (
-        <Menu.Item key={category} onClick={() => onSelect(category)}>
-          {category}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
+  const menuItems = categories.map((category) => ({
+    key: category,
+    label: category,
+    onClick: () => onSelect(category),
+  }));
+
+  return <Menu mode="horizontal" selectedKeys={[selectedCategory]} items={menuItems} />;
 };
 
 export default CategoryFilter;
