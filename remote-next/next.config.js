@@ -7,7 +7,7 @@ const moduleFederationConfig = {
     host: `host@http://localhost:3000/_next/static/chunks/remoteEntry.js`
   },
   exposes: {
-    "./Button": "./components/Button.js",
+    "./Products": "./pages/products.js",
   },
   shared: {
     react: {
