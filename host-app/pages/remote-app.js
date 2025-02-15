@@ -4,13 +4,13 @@ export default function RemoteApp() {
   const [Component, setComponent] = useState(null);
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setComponent(lazy(() => import("remote/Button")));
+      setComponent(lazy(() => import("remote/Basket")));
     }
   }, []);
 
   return (
     <>
-      <h1>Remote App</h1>
+      <h1>Remote App (Remote)</h1>
       {Component && <Component />}
     </>
   );
