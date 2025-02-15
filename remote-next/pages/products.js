@@ -15,6 +15,7 @@ export default function ProductsPage() {
         categories={["All", "T-shirts", "Shirts", "Cardigans", "Jackets", "Sweatshirts"]}
         selectedCategory={selectedCategory}
         onSelect={setSelectedCategory}
+        onClear={() => setSelectedCategory("All")}
       />
       <ProductList />
       <Button type="primary" block style={{ marginTop: "20px" }}>
