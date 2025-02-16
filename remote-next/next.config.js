@@ -1,4 +1,5 @@
 const { NextFederationPlugin } = require("@module-federation/nextjs-mf");
+const path = require('path');
 
 const moduleFederationConfig = {
   name: "remoteNext",
@@ -7,7 +8,12 @@ const moduleFederationConfig = {
     host: `host@http://localhost:3000/_next/static/chunks/remoteEntry.js`
   },
   exposes: {
-    "./Button": "./components/Button.js",
+    './ProductList': './components/ProductList.tsx'
+  },
+  resolve: {
+    alias: {
+      'shared-state': path.resolve(__dirname, '../../shared/store'),
+    },
   },
   shared: {
     react: {
@@ -18,6 +24,18 @@ const moduleFederationConfig = {
       singleton: true,
       requiredVersion: false,
     },
+    '@reduxjs/toolkit': {
+      singleton: true,
+      requiredVersion: '^2.5.1'
+    },
+    'react-redux': {
+      singleton: true,
+      requiredVersion: '^9.2.0'
+    },
+    'shared/store/store': {
+      singleton: true,
+      eager: true
+    }
   },
 };
 

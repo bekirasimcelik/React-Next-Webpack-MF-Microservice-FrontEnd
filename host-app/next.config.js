@@ -21,6 +21,18 @@ module.exports = {
               singleton: true,
               requiredVersion: false,
             },
+            '@reduxjs/toolkit': {
+              singleton: true,
+              requiredVersion: '^2.5.1'
+            },
+            'react-redux': {
+              singleton: true,
+              requiredVersion: '^9.2.0'
+            },
+            'shared/store/store': {
+              singleton: true,
+              eager: true
+            }
           },
         })
       );
