@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/products.js"  ],
+, "pages/products.js", "components/ProductCard.jsx"  ],
   "exclude": [
     "node_modules"
   ]

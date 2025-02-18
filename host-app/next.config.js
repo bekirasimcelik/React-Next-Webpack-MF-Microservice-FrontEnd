@@ -32,7 +32,8 @@ module.exports = {
             'shared/store/store': {
               singleton: true,
               eager: true
-            }
+            },
+            'shared/features/products/productsService': { singleton: true }
           },
         })
       );

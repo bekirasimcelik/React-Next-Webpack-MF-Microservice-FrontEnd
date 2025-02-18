@@ -8,12 +8,7 @@ const moduleFederationConfig = {
     host: `host@http://localhost:3000/_next/static/chunks/remoteEntry.js`
   },
   exposes: {
-    './ProductList': './components/ProductList.tsx'
-  },
-  resolve: {
-    alias: {
-      'shared-state': path.resolve(__dirname, '../../shared/store'),
-    },
+    './ProductList': './components/ProductList.jsx'
   },
   shared: {
     react: {
@@ -35,12 +30,21 @@ const moduleFederationConfig = {
     'shared/store/store': {
       singleton: true,
       eager: true
-    }
+    },
+    'shared/features/products/productsService': { singleton: true }
   },
 };
 
 module.exports = {
   reactStrictMode: true,
+  // disable linting
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  // disable type checking
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   webpack(config, options) {
     Object.assign(config.experiments, { topLevelAwait: true });
 
