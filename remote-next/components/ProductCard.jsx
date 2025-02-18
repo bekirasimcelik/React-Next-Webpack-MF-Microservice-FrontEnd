@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography, Space } from "antd";
+import { Card, Typography, Space, Button } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -59,18 +59,38 @@ const ProductCard = ({ product, onClick }) => {
       </div>
 
       <Space direction="vertical" style={{ width: "100%" }}>
-        <Title level={5} style={{ ...textEllipsisStyle, margin: 0, fontSize: 14 }}>
+        <Title
+          level={5}
+          style={{ ...textEllipsisStyle, margin: 0, fontSize: 14 }}
+        >
           {product.title}
         </Title>
 
-        <Text type="secondary" style={{ ...textEllipsisStyle, fontSize: 12, lineHeight: 1.4 }}>
+        <Text
+          type="secondary"
+          style={{ ...textEllipsisStyle, fontSize: 12, lineHeight: 1.4 }}
+        >
           {product.description}
         </Text>
-
-        <Text strong style={{ ...textEllipsisStyle, fontSize: 14, color: "#1890ff" }}>
+        <div
+        style={{
+          display: 'flex',
+          justifyContent: "space-around",
+          alignItems: 'center',
+          width: "auto",
+        }}
+      >
+        <Text
+          strong
+          style={{ ...textEllipsisStyle, fontSize: 14, color: "#1890ff" }}
+        >
           ${product.price.toFixed(2)}
         </Text>
+        <Button type="primary">Add to Cart</Button>
+        </div>
       </Space>
+   
+       
     </Card>
   );
 };

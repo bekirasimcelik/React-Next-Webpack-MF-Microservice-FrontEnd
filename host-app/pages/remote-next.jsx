@@ -1,8 +1,7 @@
 // host-app/app/page.tsx
 import React, { lazy, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import { store } from '../../shared/store/store';
-
+import { store } from '../../shared/store';
 
 export default function HomePage() {
 

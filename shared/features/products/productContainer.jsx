@@ -1,24 +1,26 @@
-import React from 'react';
-import { useGetProductsQuery } from './productsService';
-import { useAppDispatch } from '../../store/store';
+import React from "react";
+import { fetchProducts } from "../../store/actions/productAction";
+import { useDispatch } from 'react-redux';
+
 
 export function withProducts(Component) {
   return function WrappedComponent(props) {
-    const { data: products = [], error, isLoading } = useGetProductsQuery();
-    const dispatch = useAppDispatch();
+    // const { data: products = [], error, isLoading } = useGetProductsQuery();
+    // const dispatch = useAppDispatch();
+    const dispatch = useDispatch()
+    console.log("withProducts API response:", { products, isLoading, error });
 
     React.useEffect(() => {
-      if (products.length > 0) {
-        console.log("Products loaded");
-      }
-    }, [products, dispatch]);
+      dispatch(fetchProducts())
+      console.log("Deneme")
+    }, []);
 
     return (
-      <Component 
-        {...props} 
-        products={products} 
-        isLoading={isLoading} 
-        error={error} 
+      <Component
+        {...props}
+        products={products || []}
+        isLoading={isLoading}
+        error={error}
       />
     );
   };
