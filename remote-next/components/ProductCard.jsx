@@ -1,5 +1,7 @@
 import React from "react";
 import { Card, Typography, Space, Button } from "antd";
+import { useAppDispatch } from "../../shared/store";
+import { saveCart } from "../../shared/store/actions/cartAction";
 
 const { Title, Text } = Typography;
 
@@ -37,6 +39,13 @@ const textEllipsisStyle = {
 };
 
 const ProductCard = ({ product, onClick }) => {
+const dispatch = useAppDispatch()
+  const handleUpdate = () => {
+    dispatch(saveCart())
+    console.log("deneme")
+  }
+  
+  
   const handleImageError = (e) => {
     e.currentTarget.src = "/placeholder.png";
   };
@@ -86,7 +95,7 @@ const ProductCard = ({ product, onClick }) => {
         >
           ${product.price.toFixed(2)}
         </Text>
-        <Button type="primary">Add to Cart</Button>
+        <Button onClick={() => handleUpdate()} type="primary">Add to Cart</Button>
         </div>
       </Space>
    

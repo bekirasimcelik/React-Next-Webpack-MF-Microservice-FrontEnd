@@ -1,8 +1,12 @@
-import React from "react";
-import type { AppProps } from "next/app";
+import { Provider } from 'react-redux';
+import {store} from "../../shared/store";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
+    <Provider store={store}>
       <Component {...pageProps} />
+    </Provider>
   );
 }
+
+export default MyApp;
