@@ -2,7 +2,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../shared/store";
-import { addItem } from "../../shared/store/slices/cartSlice";
+import { addToCart } from "../../shared/store/actions/cartAction";
 import ProductCard from "./ProductCard";
 import { fetchProducts } from "../../shared/store/actions/productAction";
 
@@ -17,7 +17,7 @@ const ProductListInternal = () => {
 
   const handleProductSelect = (product) => {
     dispatch(
-      addItem({
+      addToCart({
         id: product.id,
         name: product.title,
         price: product.price,
