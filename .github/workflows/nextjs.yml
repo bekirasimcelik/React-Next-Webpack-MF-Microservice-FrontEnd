@@ -88,9 +88,9 @@ jobs:
         run: |
           mkdir -p final_output
           cp package.json final_output/package.json
-          cp -r host-app/out final_output/host-app
-          cp -r remote-app/out final_output/remote-app
-          cp -r remote-next/out final_output/remote-next
+          cp -r host-app/.next final_output/host-app
+          cp -r remote-app/dist final_output/remote-app
+          cp -r remote-next/.next final_output/remote-next
 
       # Start projects in parallel using pnpm
       - name: Start all services in parallel
