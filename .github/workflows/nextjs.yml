@@ -67,21 +67,21 @@ jobs:
         run: cd host-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build host-app
-        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Remote-app içinde npm install ve build
       - name: Install dependencies for remote-app
         run: cd remote-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-app
-        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Remote-next içinde npm install ve build
       - name: Install dependencies for remote-next
         run: cd remote-next && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-next
-        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Build edilen dosyaları yükleme
       - name: Upload artifact
