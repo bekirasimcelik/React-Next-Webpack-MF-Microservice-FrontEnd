@@ -55,9 +55,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            host-app/.next/cache
-            remote-app/.next/cache
-            remote-next/.next/cache
+            host-app/.next
+            remote-app/.next
+            remote-next/.next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
@@ -67,27 +67,42 @@ jobs:
         run: cd host-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build host-app
-        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} build
+        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
 
       # Remote-app içinde npm install ve build
       - name: Install dependencies for remote-app
         run: cd remote-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-app
-        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} build
+        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
 
       # Remote-next içinde npm install ve build
       - name: Install dependencies for remote-next
         run: cd remote-next && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-next
-        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} build
+        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
+
+      # Tüm build dosyalarını tek bir klasöre kopyala
+      - name: Merge all build outputs
+        run: |
+          mkdir -p final_output
+          cp -r host/out final_output/host
+          cp -r host-app/out final_output/host-app
+          cp -r remote-app/out final_output/remote-app
+          cp -r remote-next/out final_output/remote-next
+
+      # Start projects in parallel using pnpm
+      - name: Start all services in parallel
+        run: |
+          echo "Starting all services in parallel..."
+          nohup pnpm --parallel --filter nextjs-react_* run dev > services.log 2>&1 &
 
       # Build edilen dosyaları yükleme
-      - name: Upload artifact
+      - name: Upload all artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: host/out
+          path: final_output
 
   deploy:
     environment:
