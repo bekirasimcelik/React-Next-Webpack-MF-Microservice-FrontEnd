@@ -56,7 +56,7 @@ jobs:
         with:
           path: |
             host-app/.next
-            remote-app/.next
+            remote-app/dist
             remote-next/.next
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
@@ -67,27 +67,27 @@ jobs:
         run: cd host-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build host-app
-        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
+        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Remote-app içinde npm install ve build
       - name: Install dependencies for remote-app
         run: cd remote-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-app
-        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
+        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Remote-next içinde npm install ve build
       - name: Install dependencies for remote-next
         run: cd remote-next && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
       - name: Build remote-next
-        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} next build -o out
+        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} build
 
       # Tüm build dosyalarını tek bir klasöre kopyala
       - name: Merge all build outputs
         run: |
           mkdir -p final_output
-          cp -r host/out final_output/host
+          cp package.json final_output/package.json
           cp -r host-app/out final_output/host-app
           cp -r remote-app/out final_output/remote-app
           cp -r remote-next/out final_output/remote-next
@@ -95,6 +95,8 @@ jobs:
       # Start projects in parallel using pnpm
       - name: Start all services in parallel
         run: |
+          echo "installing required packages"
+          pnpm install
           echo "Starting all services in parallel..."
           nohup pnpm --parallel --filter nextjs-react_* run dev > services.log 2>&1 &
 
