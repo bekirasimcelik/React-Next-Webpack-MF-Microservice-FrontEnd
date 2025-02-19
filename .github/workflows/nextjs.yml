@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Detect package manager
@@ -55,20 +55,35 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            host/.next/cache
+            host-app/.next/cache
+            remote-app/.next/cache
+            remote-next/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
 
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      # Host-app içinde npm install ve build
+      - name: Install dependencies for host-app
+        run: cd host-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
 
-      - name: Build with Next.js in "host" folder
-        run: |
-          mkdir -p host
-          mv .next host/.next
-          ${{ steps.detect-package-manager.outputs.runner }} next build -o host/out
+      - name: Build host-app
+        run: cd host-app && ${{ steps.detect-package-manager.outputs.runner }} next build
 
+      # Remote-app içinde npm install ve build
+      - name: Install dependencies for remote-app
+        run: cd remote-app && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Build remote-app
+        run: cd remote-app && ${{ steps.detect-package-manager.outputs.runner }} next build
+
+      # Remote-next içinde npm install ve build
+      - name: Install dependencies for remote-next
+        run: cd remote-next && ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+
+      - name: Build remote-next
+        run: cd remote-next && ${{ steps.detect-package-manager.outputs.runner }} next build
+
+      # Build edilen dosyaları yükleme
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
