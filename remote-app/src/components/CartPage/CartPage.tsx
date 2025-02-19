@@ -1,43 +1,62 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Typography } from "antd";
+import React, { useEffect } from "react";
+import { Row, Col, Button } from "antd";
 import CartItemList from "../CartItemsList/CartItemsList";
 import OrderSummary from "../OrderSummary/OrderSummary";
-import { useSelector } from "react-redux";
-
-const { Title } = Typography;
-
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../../../../shared/store/slices/cartSlice";
+import {
+  loadCart,
+  removeItem,
+  increaseQuantity,
+  decreaseQuantity,
+} from "../../../../shared/store/actions/cartAction";
 const CartPage: React.FC = () => {
-  // const [cartItems, setCartItems] = useState([
-  //   { id: 1, name: "Dress", price: 53.99, quantity: 1, attributes: ["Floral", "Medium"] },
-  //   { id: 2, name: "T-shirt", price: 22.99, quantity: 1, attributes: ["Blue", "Medium"] },
-  //   { id: 3, name: "Necklace", price: 12.99, quantity: 1, attributes: ["White", "One size"] },
-  // ]);
-
-  const {items} = useSelector((state) => state.cart); 
-
-  useEffect(()=>{
-    console.log("deneme", items)
-  },[])
-
-  // const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  // const shipping = 5.0;
-  // const tax = 6.33;
-
+  const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.cart);
+  useEffect(() => {
+    dispatch(loadCart()); // Sayfa açıldığında sepeti yükle
+  }, [dispatch]);
+   // :white_check_mark: Sepeti temizleme işlemi
+   const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+  // :white_check_mark: Ürünü kaldırma işlemi (doğru kullanım)
+  const handleRemoveItem = (id: number) => {
+    dispatch(removeItem(id)); // :x: { id } yerine doğrudan id gönder
+  };
+  // :white_check_mark: Miktarı artırma işlemi
+  const handleIncreaseQuantity = (id: number) => {
+    dispatch(increaseQuantity(id));
+  };
+  // :white_check_mark: Miktarı azaltma işlemi
+  const handleDecreaseQuantity = (id: number) => {
+    dispatch(decreaseQuantity(id));
+  };
+  // :white_check_mark: Sepet toplam tutarını hesaplama
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = 5.0; // Sabit kargo ücreti
+  const tax = subtotal * 0.1; // %10 vergi hesaplama
   return (
     <div>
+      <Button onClick={handleClearCart} style={{ background: "red" }} type="primary">
+        Alayını sil
+      </Button>
       <Row gutter={32}>
-        {/* Basket Images */}
+        {/* Sepet Ürünleri Listesi */}
         <Col xs={24} md={16}>
-          {/* <CartItemList /> */}
+          <CartItemList
+            cartItems={items}
+            onRemoveItem={handleRemoveItem}
+            onIncreaseQuantity={handleIncreaseQuantity}
+            onDecreaseQuantity={handleDecreaseQuantity}
+          />
         </Col>
-
-        {/* Order Summary */}
+        {/* Sipariş Özeti */}
         <Col xs={24} md={8}>
-          {/* <OrderSummary  /> */}
+          <OrderSummary subtotal={subtotal} shipping={shipping} tax={tax} />
         </Col>
       </Row>
     </div>
   );
 };
-
 export default CartPage;
