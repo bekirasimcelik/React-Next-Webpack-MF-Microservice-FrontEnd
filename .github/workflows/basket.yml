@@ -1,0 +1,30 @@
+name: Build and Lint Basket Project
+
+on:
+  push:
+    paths:
+      - "basket/**"
+  pull_request:
+    paths:
+      - "basket/**"
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install Dependencies
+        run: yarn install

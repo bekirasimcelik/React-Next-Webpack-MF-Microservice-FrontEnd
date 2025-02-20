@@ -1,0 +1,35 @@
+{
+  "name": "products",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@module-federation/nextjs-mf": "8.7.8",
+    "@reduxjs/toolkit": "^2.5.1",
+    "antd": "^5.24.1",
+    "next": "15.1.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "15.1.7",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "prettier": "^3.5.1",
+    "webpack": "5.96.1",
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "5.0.4"
+  }
+}

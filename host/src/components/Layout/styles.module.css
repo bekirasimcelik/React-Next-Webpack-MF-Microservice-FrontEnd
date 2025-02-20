@@ -1,0 +1,16 @@
+  @media (max-width: 767px) {
+    .menu__mobile-button {
+      display: block !important;
+    }
+
+    .menu {
+      display: none;
+    }
+
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    background: #fff;
+  }
