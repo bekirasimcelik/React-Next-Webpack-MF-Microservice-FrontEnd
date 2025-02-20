@@ -1,0 +1,12 @@
+.description {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.wrapper {
+    height: 200px;
+    width: auto;
+    position: relative;
+}
