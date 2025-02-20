@@ -1,4 +1,7 @@
 import { lazy, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("../components/Navbar"), { ssr: false });
 
 export default function RemoteApp() {
   const [Component, setComponent] = useState(null);
@@ -10,7 +13,7 @@ export default function RemoteApp() {
 
   return (
     <>
-      <h1>Remote App (Remote)</h1>
+      <Navbar />
       {Component && <Component />}
     </>
   );

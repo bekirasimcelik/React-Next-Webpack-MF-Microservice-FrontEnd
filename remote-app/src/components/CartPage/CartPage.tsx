@@ -38,9 +38,6 @@ const CartPage: React.FC = () => {
   const tax = subtotal * 0.1; // %10 vergi hesaplama
   return (
     <div>
-      <Button onClick={handleClearCart} style={{ background: "red" }} type="primary">
-        Alayını sil
-      </Button>
       <Row gutter={32}>
         {/* Sepet Ürünleri Listesi */}
         <Col xs={24} md={16}>

@@ -2,6 +2,9 @@
 import React, { lazy, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { store } from '../../shared/store';
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("../components/Navbar"), { ssr: false });
 
 export default function HomePage() {
 
@@ -14,7 +17,7 @@ export default function HomePage() {
   return (
     <Provider store={store}>
       <main>
-        <h1>Products</h1>
+        <Navbar />
         {Component && <Component />}
       </main>
     </Provider>

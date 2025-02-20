@@ -12,6 +12,9 @@ module.exports = {
               "remoteNext@http://localhost:3002/_next/static/chunks/remoteNext.js",
           },
           filename: "static/chunks/remoteEntry.js",
+          exposes: {
+            "./Navbar": "./components/Navbar",
+          },
           shared: {
             react: {
               singleton: true,

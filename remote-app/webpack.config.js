@@ -42,6 +42,9 @@ module.exports = {
   plugins: [
     new ModuleFederationPlugin({
       name: "remote",
+      remotes: {
+        host: "host@http://localhost:3000/_next/static/chunks/remoteEntry.js",
+      },
       library: { type: "var", name: "remote" },
       filename: "remote.js",
       exposes: {
