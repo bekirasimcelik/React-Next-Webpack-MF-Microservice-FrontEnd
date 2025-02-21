@@ -98,7 +98,7 @@ jobs:
           echo "installing required packages"
           npm install
           echo "Starting all services in parallel..."
-          nohup npm --parallel --filter nextjs-react_* run dev > services.log 2>&1 &
+          concurrently \"cd basket; npm run dev\" \"cd products; npm run dev\" \"cd host; npm run dev\"
 
       # Build edilen dosyaları yükleme
       - name: Upload all artifacts
