@@ -1,0 +1,26 @@
+version: "2.0"
+services:
+  kayra-export-mfe-products:
+    build:
+      context: ./products
+    ports:
+      - "3002:3002"
+    container_name: kayra-export-mfe-products
+    stdin_open: true
+  kayra-export-mfe-basket:
+    build:
+      context: ./basket
+    ports:
+      - "3001:3001"
+    container_name: kayra-export-mfe-basket
+    stdin_open: true
+  kayra-export-mf-host:
+    build:
+      context: ./host
+    ports:
+      - "3000:3000"
+    container_name: kayra-export-mf-host
+    stdin_open: true
+    depends_on:
+      - kayra-export-mfe-products
+      - kayra-export-mfe-basket
